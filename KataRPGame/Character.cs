@@ -4,6 +4,7 @@ namespace KataRPGame
 	{
 		public double Health { get; set; }
 		public double MaxHealth { get; private set; }
+		public double AttackRange { get; set; }
 		public int Level { get; private set; }
 
 		public Character()
@@ -11,6 +12,7 @@ namespace KataRPGame
 			Level = 1;
 			MaxHealth = 1000.0;
 			Health = MaxHealth;
+			AttackRange = 200.0;
 		}
 
 		public Character(int level) : this()
@@ -41,6 +43,7 @@ namespace KataRPGame
 		{
 			if (target == this) return;
 			if (Target(target).Has(5).LevelsOver(this)) return;
+			if (DistanceTo(target) >= AttackRange) return;
 
 			target.ReceiveDamage(damage);
 		}
@@ -55,6 +58,11 @@ namespace KataRPGame
 			if (target != this) return;
 
 			target.ReceiveHealing(healing);
+		}
+
+		public virtual double DistanceTo(Character target)
+		{
+			return 0.0;
 		}
 	}
 
